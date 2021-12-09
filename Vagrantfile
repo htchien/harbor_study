@@ -14,8 +14,8 @@ Vagrant.configure("2") do |config|
     # boxes at https://vagrantcloud.com/search.
     config.vm.box = "ubuntu/hirsute64"
     config.vm.box_version ='20210924.0.0'
-    config.vm.hostname = 'ted-k8s-harbor-dev'
-    config.vm.define vm_name = 'ted-k8s-harbor'
+    config.vm.hostname = 'ted-harbor-dev'
+    config.vm.define vm_name = 'ted-harbor'
   
     # Disable automatic box update checking. If you disable this, then
     # boxes will only be checked for updates when the user runs
