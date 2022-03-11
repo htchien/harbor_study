@@ -12,8 +12,8 @@ Vagrant.configure("2") do |config|
   
     # Every Vagrant development environment requires a box. You can search for
     # boxes at https://vagrantcloud.com/search.
-    config.vm.box = "ubuntu/hirsute64"
-    config.vm.box_version ='20210924.0.0'
+    config.vm.box = "ubuntu/focal64"
+    # config.vm.box_version ='20210924.0.0'
     config.vm.hostname = 'ted-harbor-dev'
     config.vm.define vm_name = 'ted-harbor'
   
@@ -90,13 +90,20 @@ Vagrant.configure("2") do |config|
       curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
       sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
       sudo apt-get update
-      # export DOCKER_VERSION="5:19.03.5~3-0~ubuntu-hirsute"
-      sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+      export DOCKER_VERSION="20.10.11"
+      sudo apt-get install -y docker-ce=5:${DOCKER_VERSION}~3-0~ubuntu-focal docker-ce-cli=5:${DOCKER_VERSION}~3-0~ubuntu-focal containerd.io
       sudo usermod -aG docker $USER
 
       # echo "================== Install Docker Compose ================="
       sudo apt-get install -y docker-compose
-  
+
+      # echo "================== Install Kubernetes ================="
+      curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+      sudo add-apt-repository "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+      sudo apt-get update
+      export K8S_VERSION="1.19.0"
+      sudo apt-get install -y kubeadm=${K8S_VERSION}-00 kubectl=${K8S_VERSION}-00 kubelet=${K8S_VERSION}-00
+
       # echo "================== ted-k8s-harbor Provisioning Finished =================="
     SHELL
   end
